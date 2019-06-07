@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
   res.render('login');
 });
 
-// 로그인 페이지
+// 로그인 유효성 검사
 router.post('/', function(req, res, next) {
   
   const id = req.body.id;
@@ -53,7 +53,7 @@ router.get('/logout', function(req, res, next) {
 });
 
 
-// 회원정보 테이블
+// 회원정보 페이지
 router.get('/table', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM user;', function(err, results){
