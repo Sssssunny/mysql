@@ -1,17 +1,62 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>test</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <title>회원정보</title>
+    <link rel="stylesheet" href="http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css">
   </head>
+  <style>
+  table {
+    font-family:'Nanum Barun Gothic';
+    border-collapse: collapse;
+    margin: 10px;
+    text-align: center;
+    font-size: 15px;
+    margin: 40px;
+  }
+
+  table td, th {
+    padding: 15px;
+    border: 1px solid #aaa;
+  }
+
+  table td {
+    background-color: #ececec;
+  }
+
+  table th {
+    background-color: lightsteelblue;
+  }
+  </style>
+  
   <body>
-  <table border="1" align="center">
+  <center>
+  <table>
+    <th>회원번호</th>
+    <th>이름</th>
+    <th>나이</th>
+    <th>생일</th>
+    <th>주소</th>
+    <th>우편번호</th>
+    <th>취미</th>
+    <th>전화번호</th>
+    <th>이메일</th>
+    <!-- for문으로 회원 10명의 이름, 나이, 이메일 추출 -->
     <% for (const result of results) { %>
-      <tr>
-        <td>이름</td>
-        <td><%= result.ENAME %></td>
-      </tr>
+    <tr>
+      <td style="font-weight: bold; font-size: 20px;"><%= result.NUM %></td>
+      <td><%= result.NAME %></td>
+      <td><%= result.AGE %></td>
+      <td><%= result.BIRTH %></td>
+      <td><%= result.ADD %></td>
+      <td><%= result.POST %></td>
+      <td><%= result.HOBBY %></td>
+      <td><%= result.PHONE %></td>
+      <td><%= result.EMAIL %></td>
+    </tr>
     <% } %>
   </table>
+
+  <a href="/logout"><input type="button" class="button" value="로그아웃"/></a>
+  </center>
   </body>
 </html>
