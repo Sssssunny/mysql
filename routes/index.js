@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
   res.render('login');
 });
 
-// 로그인 유효성 검사
+// 로그인 DB 검사
 router.post('/', function(req, res, next) {
   
   const id = req.body.id;
@@ -36,7 +36,8 @@ router.post('/', function(req, res, next) {
         console.log('---------로그인 성공---------');
       } else
       if(result.length >= 0) {
-        res.render('false');
+        
+        res.render('login');
         console.log('---------로그인 실패---------');
       }
     });

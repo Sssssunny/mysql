@@ -32,18 +32,14 @@ form {
 }
 </style>
 
-<script language="javascript">
-    if(id.length >= 0 && pw.length >= 0){
-        alert("아이디와 비밀번호를 다시 확인해주세요.");
-    }
-</script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head> 
 
 <body>
 
 <h1 class="title">로그인</h1>
-<form name="login" onsubmit="return validate();" method="post" action="/">
+<form name="login" method="post" action="/">
     <table align="center" cellspacing="0">
     <tr>
         <th colspan="2"><input type="text" name="id" id="id" style="border:solid lightsteelblue 2px; height:35px; width:250px;"></th>
@@ -53,10 +49,21 @@ form {
     </table>
     <center>
         <br/>
-        <input type="submit" class="button" value="로그인" style="color:#93aed2; background-color:white; border:solid white"/>
-        <a href="/join"><input type="button" class="button" value="회원가입" style="color:#93aed2; background-color:white; border:solid white"/></a>
+        <input type="submit" value="로그인" style="color:#93aed2; background-color:white; border:solid white"/>
+        <a href="/join"><input type="button" value="회원가입" style="color:#93aed2; background-color:white; border:solid white"/></a>
     </center>
 </form>
+
+<script type="text/javascript">
+    const RegexId = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i; //아이디 요휴성 검사
+    $("form").submit(function(){
+        if (!RegexId.test($.trim($("#id").val()))) {
+            alert("아이디를 다시 확인해주세요.");
+            $("#id").focus();
+            return false;
+        }
+    });
+</script>
 
 </body>
 </html>
