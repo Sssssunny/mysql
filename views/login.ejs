@@ -33,7 +33,6 @@ form {
 </style>
 
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-
 </head> 
 
 <body>
@@ -57,6 +56,7 @@ form {
 <script type="text/javascript">
     const RegexId = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i; //아이디 요휴성 검사
     $("form").submit(function(){
+        //아이디 유효성 검사
         if (!RegexId.test($.trim($("#id").val()))) {
             alert("아이디를 다시 확인해주세요.");
             $("#id").focus();

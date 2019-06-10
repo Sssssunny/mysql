@@ -36,8 +36,7 @@ router.post('/', function(req, res, next) {
         console.log('---------로그인 성공---------');
       } else
       if(result.length >= 0) {
-        
-        res.render('login');
+        res.render('false');
         console.log('---------로그인 실패---------');
       }
     });
