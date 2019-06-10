@@ -54,11 +54,11 @@ form {
 </form>
 
 <script type="text/javascript">
-    const RegexId = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i; //아이디 요휴성 검사
+    const RegexId = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i; //아이디 유효성 검사
     $("form").submit(function(){
         //아이디 유효성 검사
         if (!RegexId.test($.trim($("#id").val()))) {
-            alert("아이디를 다시 확인해주세요.");
+            alert("아이디를 이메일 형식으로 입력해주세요.");
             $("#id").focus();
             return false;
         }
