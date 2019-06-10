@@ -140,7 +140,7 @@
         }
 
         //비밀번호 유효성 검사
-        else if ($("#pw").val == '') {
+        else if ($("#pw").val() == '') {
             alert("비밀번호를 다시 입력해주세요.");
             $("#pw").focus();
             return false;
@@ -161,7 +161,7 @@
         }
 
         //취미 유효성 검사
-        else if ($("#hobby").val == '') {
+        else if ($("#hobby").val() == '') {
             alert("취미를 다시 입력해주세요.");
             $("#hobby").focus();
             return false;
