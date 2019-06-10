@@ -86,6 +86,10 @@
             <br/>20자 미만</td>
        </tr>
        <tr>
+           <th>비밀번호 확인</th>
+           <td><input type="password" name="checkpw" id="checkpw"/>
+       </tr>
+       <tr>
            <th>전화번호</th>
            <td><input type="text" name="phone" id="phone"/></td>
        </tr>
@@ -143,6 +147,13 @@
         else if ($("#pw").val() == '') {
             alert("비밀번호를 다시 입력해주세요.");
             $("#pw").focus();
+            return false;
+        }
+
+        // 비밀번호 확인
+        else if ($("#pw").val() != $("#checkpw".val)) {
+            alert("비밀번호를 잘못 입력하셨습니다.");
+            $("#checkpw").focus();
             return false;
         }
 
