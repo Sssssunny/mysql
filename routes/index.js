@@ -75,4 +75,28 @@ router.get('/join', function(req, res, next) {
   res.render('join');
 });
 
+router.post('/join', function (req, res, next) {
+  const name = req.body.name;
+  const id = req.body.id;
+  const pw = req.body.pw;
+  const phone = req.body.phone;
+  const birth = req.body.birth;
+  const age = req.body.age;
+  const post = req.body.post;
+  const add = req.body.add;
+  const hobby = req.body.hobby;
+
+  conn.query('insert into user values(?,?,?,?,?,?,?,?,?)',
+      [name, age, birth, add, post, hobby, phone, id, pw], function (err, rows, fields) {
+      if (!err) {
+          res.send('success');
+      }
+      else {
+          res.send('err : ' + err);
+      }
+      conn.release();
+  });
+});
+
+
 module.exports = router;
