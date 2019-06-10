@@ -55,7 +55,7 @@ router.get('/logout', function(req, res, next) {
 
 // 회원정보 페이지
 router.get('/table', function(req, res, next) {
-  pool.getConnection(function(err, conn){
+  pool.getConnection(function(err, conn) {
     conn.query('SELECT * FROM user;', function(err, results){
     console.log('---------회원정보 페이지 접속---------');
     // console.log(results[0].BIRTH);
@@ -75,28 +75,47 @@ router.get('/join', function(req, res, next) {
   res.render('join');
 });
 
-router.post('/join', function (req, res, next) {
-  const name = req.body.name;
-  const id = req.body.id;
-  const pw = req.body.pw;
-  const phone = req.body.phone;
-  const birth = req.body.birth;
-  const age = req.body.age;
-  const post = req.body.post;
-  const add = req.body.add;
-  const hobby = req.body.hobby;
+// router.post('/join', function (req, res, next) {
+//   const name = req.body.name;
+//   const id = req.body.id;
+//   const pw = req.body.pw;
+//   const phone = req.body.phone;
+//   const birth = req.body.birth;
+//   const age = req.body.age;
+//   const post = req.body.post;
+//   const add = req.body.add;
+//   const hobby = req.body.hobby;
 
-  conn.query('insert into user values(?,?,?,?,?,?,?,?,?)',
-      [name, age, birth, add, post, hobby, phone, id, pw], function (err, rows, fields) {
-      if (!err) {
-          res.send('success');
-      }
-      else {
-          res.send('err : ' + err);
-      }
-      conn.release();
+//   conn.query('INSERT into user values(?,?,?,?,?,?,?,?,?)',
+//       [name, age, birth, add, post, hobby, phone, id, pw], function (err, rows, fields) {
+//       if (!err) {
+//           res.send('success');
+//       }
+//       else {
+//           res.send('err : ' + err);
+//       }
+//       conn.release();
+//   });
+
+  router.post('/join', function(req, res) {
+    const name = req.body.name;
+    const id = req.body.id;
+    const pw = req.body.pw;
+    const phone = req.body.phone;
+    const birth = req.body.birth;
+    const age = req.body.age;
+    const post = req.body.post;
+    const add = req.body.add;
+    const hobby = req.body.hobby;
+
+    pool.getConnection(function(err, conn) {
+      const query = conn.query('INSERT INTO user (NAME, AGE, BIRTH, ADD, POST, HOBBY, PHONE, EMAIL, PW) VALUES("' + name + '", "' + age + '", "' + birth + '", "' + add + '", "' + post + '", "' + hobby + '", "' + phone + '", "' + id + '", "' + pw + '")', function(err, rows) {
+          if (err) { throw err;}
+          console.log('---------회원가입 성공---------');
+      })
+        conn.release();
+    });
   });
-});
 
 
 module.exports = router;

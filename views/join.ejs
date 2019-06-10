@@ -138,7 +138,7 @@
 
         //아이디 유효성 검사
         else if (!RegexId.test($.trim($("#id").val()))) {
-            alert("아이디를 다시 입력해주세요.");
+            alert("아이디를 이메일 형식으로 입력해주세요.");
             $("#id").focus();
             return false;
         }
@@ -151,7 +151,7 @@
         }
 
         // 비밀번호 확인
-        else if ($("#pw").val() != $("#checkpw".val)) {
+        else if ($("#pw").val() != $("#checkpw".val())) {
             alert("비밀번호를 잘못 입력하셨습니다.");
             $("#checkpw").focus();
             return false;
@@ -168,6 +168,13 @@
         else if (!RegexPost.test($.trim($("#post").val()))) {
             alert("우편번호를 다시 입력해주세요.");
             $("#post").focus();
+            return false;
+        }
+
+        //비밀번호 유효성 검사
+        else if ($("#add").val() == '') {
+            alert("주소를 다시 입력해주세요.");
+            $("#add").focus();
             return false;
         }
 
