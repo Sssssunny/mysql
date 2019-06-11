@@ -31,11 +31,11 @@ router.post('/', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM user WHERE EMAIL = '${id}' AND PW = password('${pw}');`,function(err, result){
       if(result.length > 0) {
-        res.render('true', {ID: id, PW: pw});
+        res.render('logintrue', {ID: id, PW: pw});
         console.log('---------로그인 성공---------');
       } else
       if(result.length >= 0) {
-        res.render('false');
+        res.render('loginfalse');
         console.log('---------로그인 실패---------');
       }
     });
@@ -74,28 +74,6 @@ router.get('/join', function(req, res, next) {
   res.render('join');
 });
 
-// router.post('/join', function (req, res, next) {
-//   const name = req.body.name;
-//   const id = req.body.id;
-//   const pw = req.body.pw;
-//   const phone = req.body.phone;
-//   const birth = req.body.birth;
-//   const age = req.body.age;
-//   const post = req.body.post;
-//   const add = req.body.add;
-//   const hobby = req.body.hobby;
-
-//   conn.query('INSERT into user values(?,?,?,?,?,?,?,?,?)',
-//       [name, age, birth, add, post, hobby, phone, id, pw], function (err, rows, fields) {
-//       if (!err) {
-//           res.send('success');
-//       }
-//       else {
-//           res.send('err : ' + err);
-//       }
-//       conn.release();
-//   });
-
   router.post('/join', function(req, res) {
     const name = req.body.name;
     const age = req.body.age;
@@ -108,9 +86,9 @@ router.get('/join', function(req, res, next) {
     const pw = req.body.pw;
 
     pool.getConnection(function(err, conn) {
-      const query = conn.query(`INSERT INTO user (NAME, AGE, BIRTH, ADD, POST, HOBBY, PHONE, EMAIL, PW) VALUES('${name}', '${age}', '${birth}', '${add}', '${post}', '${hobby}', '${phone}', '${id}', 'password(${pw}));`, function(err, result) {
+      conn.query(`INSERT INTO user (\`NAME\`, AGE, BIRTH, \`ADD\`, POST, HOBBY, PHONE, EMAIL, PW) VALUES('${name}', '${age}', '${birth}', '${add}', '${post}', '${hobby}', '${phone}', '${id}', password('${pw}'));`, function(err, result) {
           if (err) { throw err;}
-          console.log('---------회원가입 성공---------');
+          res.render('true', {ID: id, PW: pw});
       })
     });
   });
