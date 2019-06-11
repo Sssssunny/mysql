@@ -74,24 +74,25 @@ router.get('/join', function(req, res, next) {
   res.render('join');
 });
 
-  router.post('/join', function(req, res) {
-    const name = req.body.name;
-    const age = req.body.age;
-    const birth = req.body.birth;
-    const add = req.body.add;
-    const post = req.body.post;
-    const hobby = req.body.hobby;
-    const phone = req.body.phone;
-    const id = req.body.id;
-    const pw = req.body.pw;
+// 회원가입 기능
+router.post('/join', function(req, res) {
+  const name = req.body.name;
+  const age = req.body.age;
+  const birth = req.body.birth;
+  const add = req.body.add;
+  const post = req.body.post;
+  const hobby = req.body.hobby;
+  const phone = req.body.phone;
+  const id = req.body.id;
+  const pw = req.body.pw;
 
-    pool.getConnection(function(err, conn) {
-      conn.query(`INSERT INTO user (\`NAME\`, AGE, BIRTH, \`ADD\`, POST, HOBBY, PHONE, EMAIL, PW) VALUES('${name}', '${age}', '${birth}', '${add}', '${post}', '${hobby}', '${phone}', '${id}', password('${pw}'));`, function(err, result) {
-          if (err) { throw err;}
-          res.render('true', {ID: id, PW: pw});
-      })
-    });
+  pool.getConnection(function(err, conn) {
+    conn.query(`INSERT INTO user (\`NAME\`, AGE, BIRTH, \`ADD\`, POST, HOBBY, PHONE, EMAIL, PW) VALUES('${name}', '${age}', '${birth}', '${add}', '${post}', '${hobby}', '${phone}', '${id}', password('${pw}'));`, function(err, result) {
+        if (err) { throw err;}
+        res.render('true', {ID: id, PW: pw});
+    })
   });
+});
 
 
 module.exports = router;
