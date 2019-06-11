@@ -109,7 +109,7 @@ router.get('/join', function(req, res, next) {
     const hobby = req.body.hobby;
 
     pool.getConnection(function(err, conn) {
-      const query = conn.query('INSERT INTO user (NAME, AGE, BIRTH, ADD, POST, HOBBY, PHONE, EMAIL, PW) VALUES("' + name + '", "' + age + '", "' + birth + '", "' + add + '", "' + post + '", "' + hobby + '", "' + phone + '", "' + id + '", "' + pw + '")', function(err, rows) {
+      const query = conn.query(`INSERT INTO user (NAME, AGE, BIRTH, ADD, POST, HOBBY, PHONE, EMAIL, PW) VALUES('${name}', '${age}', '${birth}', '${add}', '${post}', '${hobby}', '${phone}', '${id}', 'password(${pw}));`, function(err, result) {
           if (err) { throw err;}
           console.log('---------회원가입 성공---------');
       })
