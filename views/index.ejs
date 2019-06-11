@@ -40,6 +40,7 @@
     <th>취미</th>
     <th>전화번호</th>
     <th>이메일</th>
+    <th>회원탈퇴</th>
     <!-- for문으로 회원 10명의 이름, 나이, 이메일 추출 -->
     <% for (const result of results) { %>
     <tr>
@@ -52,6 +53,7 @@
       <td><%= result.HOBBY %></td>
       <td><%= result.PHONE %></td>
       <td><%= result.EMAIL %></td>
+      <td><input type="button" value="회원탈퇴"/></td>
     </tr>
     <% } %>
   </table>
