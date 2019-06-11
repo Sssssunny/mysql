@@ -3,6 +3,7 @@ const router = express.Router();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const path = require('path');
 const app = express;
 
 const pool  = mysql.createPool({
@@ -14,6 +15,7 @@ const pool  = mysql.createPool({
   dateStrings     : 'date'
 });
 
+connection.connect();
 
 // 로그인 페이지
 router.get('/', function(req, res, next) {
