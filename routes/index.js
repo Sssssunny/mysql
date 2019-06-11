@@ -53,15 +53,39 @@ router.get('/logout', function(req, res, next) {
 
 
 // 회원정보 페이지
+
 router.get('/table', function(req, res, next) {
   pool.getConnection(function(err, conn) {
-    conn.query('SELECT * FROM user;', function(err, results){
+    conn.query('SELECT * FROM user;', function(err, results) {
     console.log('---------회원정보 페이지 접속---------');
+  
+    pool.getConnection(function(err, conn){
+      if(err) {throw err;
+      }
+      conn.query(`DELETE FROM user WHERE NUM = '${req.query.NUM}'`, function(err, results){
+        conn.release();
+        req.session.destroy();
+        res.redirect('/');
+      });
+    });
     // console.log(results[0].BIRTH);
     // console.log('-------------');
-      res.render('index', { results: results });
+     res.render('index', { results: results });
 
+     conn.release();
+    });
+  });
+});
+
+router.get('/table', function(req, res, next) {
+  
+  pool.getConnection(function(err, conn){
+    if(err) {throw err;
+    }
+    conn.query(`DELETE FROM user WHERE NUM = '${req.query.NUM}'`, function(err, results){
       conn.release();
+      req.session.destroy();
+      res.redirect('/');
     });
   });
 });

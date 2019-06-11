@@ -53,7 +53,7 @@
       <td><%= result.HOBBY %></td>
       <td><%= result.PHONE %></td>
       <td><%= result.EMAIL %></td>
-      <td><input type="button" value="회원탈퇴"/></td>
+      <td><a href="/index?NUM=<%= result.NUM %>" class="delete"><button>회원탈퇴</button></a></td>
     </tr>
     <% } %>
   </table>
