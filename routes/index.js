@@ -3,7 +3,6 @@ const router = express.Router();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const path = require('path');
 const app = express;
 
 const pool  = mysql.createPool({
@@ -14,8 +13,6 @@ const pool  = mysql.createPool({
   database        : 'sunny',
   dateStrings     : 'date'
 });
-
-connection.connect();
 
 // 로그인 페이지
 router.get('/', function(req, res, next) {
@@ -101,21 +98,20 @@ router.get('/join', function(req, res, next) {
 
   router.post('/join', function(req, res) {
     const name = req.body.name;
+    const age = req.body.age;
+    const birth = req.body.birth;
+    const add = req.body.add;
+    const post = req.body.post;
+    const hobby = req.body.hobby;
+    const phone = req.body.phone;
     const id = req.body.id;
     const pw = req.body.pw;
-    const phone = req.body.phone;
-    const birth = req.body.birth;
-    const age = req.body.age;
-    const post = req.body.post;
-    const add = req.body.add;
-    const hobby = req.body.hobby;
 
     pool.getConnection(function(err, conn) {
       const query = conn.query(`INSERT INTO user (NAME, AGE, BIRTH, ADD, POST, HOBBY, PHONE, EMAIL, PW) VALUES('${name}', '${age}', '${birth}', '${add}', '${post}', '${hobby}', '${phone}', '${id}', 'password(${pw}));`, function(err, result) {
           if (err) { throw err;}
           console.log('---------회원가입 성공---------');
       })
-        conn.release();
     });
   });
 
