@@ -53,12 +53,13 @@
       <td><%= result.HOBBY %></td>
       <td><%= result.PHONE %></td>
       <td><%= result.EMAIL %></td>
-      <td><a href="/index?NUM=<%= result.NUM %>" class="delete"><button>회원탈퇴</button></a></td>
+      <td><a href="/delete?NUM=<%= result.NUM %>" class="delete"><button>회원탈퇴</button></a></td>
     </tr>
     <% } %>
   </table>
 
   <a href="/logout"><input type="button" class="button" value="로그아웃"/></a>
+  <a href="/board"><input type="button" class="button" value="게시판으로"/></a>
   </center>
   </body>
 </html>

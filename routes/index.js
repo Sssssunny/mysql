@@ -17,9 +17,16 @@ const pool  = mysql.createPool({
 // 로그인 페이지
 router.get('/', function(req, res, next) {
   console.log('---------로그인 페이지 접속---------');
-  const id = req.body.id;
-  const pw = req.body.pw;
-  res.render('login');
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM user;', function(err, results){
+      if (req.session.id && req.session.pw ) {
+        res.render('index', { results : results });
+      } else {
+        res.render('login', {  });
+      }      
+      conn.release();
+    });
+  });
 });
 
 // 로그인 DB 검사
@@ -30,11 +37,11 @@ router.post('/', function(req, res, next) {
 
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM user WHERE EMAIL = '${id}' AND PW = password('${pw}');`,function(err, result){
-      if(result.length > 0) {
+      if (result.length > 0) {
         res.render('logintrue', {ID: id, PW: pw});
         console.log('---------로그인 성공---------');
-      } else
-      if(result.length >= 0) {
+      }
+      else {
         res.render('loginfalse');
         console.log('---------로그인 실패---------');
       }
@@ -46,30 +53,29 @@ router.post('/', function(req, res, next) {
 
 // 로그아웃
 router.get('/logout', function(req, res, next) {
-  res.render('logout');
-  req.session.destroy();
-  console.log('---------로그아웃---------');
+  
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM user;', function(err, results){
+      if (req.session.id && req.session.pw ) {
+        res.render('logout', { results : results });
+        req.session.destroy();
+      } else {
+        res.send('로그인을 먼저 해주세요.');
+      }
+      conn.release();
+    });
+  });
 });
 
 
 // 회원정보 페이지
-
 router.get('/table', function(req, res, next) {
   pool.getConnection(function(err, conn) {
     conn.query('SELECT * FROM user;', function(err, results) {
     console.log('---------회원정보 페이지 접속---------');
   
     pool.getConnection(function(err, conn){
-      if(err) {throw err;
-      }
-      conn.query(`DELETE FROM user WHERE NUM = '${req.query.NUM}'`, function(err, results){
-        conn.release();
-        req.session.destroy();
-        res.redirect('/');
-      });
     });
-    // console.log(results[0].BIRTH);
-    // console.log('-------------');
      res.render('index', { results: results });
 
      conn.release();
@@ -77,25 +83,30 @@ router.get('/table', function(req, res, next) {
   });
 });
 
-router.get('/table', function(req, res, next) {
+// 회원 탈퇴
+router.get('/delete', function(req, res, next) {
   
   pool.getConnection(function(err, conn){
     if(err) {throw err;
     }
-    conn.query(`DELETE FROM user WHERE NUM = '${req.query.NUM}'`, function(err, results){
+    conn.query(`DELETE FROM user WHERE num = '${req.query.NUM}'`, function(err, results){
       conn.release();
       req.session.destroy();
-      res.redirect('/');
+      res.redirect('/table');
     });
   });
 });
 
-router.post('')
 
 // 회원가입 페이지
 router.get('/join', function(req, res, next) {
   console.log('---------회원가입 페이지 접속---------');
-  res.render('join');
+  pool.getConnection(function(err, conn){
+    conn.query('SELECT * FROM user;', function(err, results){
+      res.render('join', { results: results });
+      conn.release();
+    });
+  });
 });
 
 // 회원가입 기능
@@ -117,6 +128,5 @@ router.post('/join', function(req, res) {
     })
   });
 });
-
 
 module.exports = router;
