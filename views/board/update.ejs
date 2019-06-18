@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>글 작성 중</title>
+    <title>글 수정 중</title>
     <link rel="stylesheet" href="http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   </head>
@@ -23,8 +23,8 @@
   </style>
   <body>
   <center>
-      <form action="/board/update" method="POST">
-      <br>
+      <form action="/board/update?NUM=<%= results.NUM %>" method="POST">
+      <br>      
       <p>
         <label class="title">수정할 제목</label>
         <input type="text" name="title" class="w3-input"></p>

@@ -1,30 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const app = express;
-
-const pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'root',
-  password        : 'qazx1235',
-  database        : 'sunny',
-  dateStrings     : 'date'
-});
+const pool = require('../config/dbconfig.js')
 
 // 게시판 글 목록
 router.get('/', function(req, res, next) {
   pool.getConnection(function(err, conn) {
     conn.query('SELECT * FROM board;', function(err, results) {
 
-    req.session.num = req.query.NUM;
-    req.session.title = req.query.TITLE;
-    req.session.content = req.query.CONTENT;
-    req.session.email = req.query.EMAIL;
-
-    res.render('board', { results: results });
+    res.render('board/board', { results: results });
     console.log('---------게시판 접속---------');
 
      conn.release();
@@ -37,7 +23,7 @@ router.get('/write', function(req, res, next) {
   console.log('---------게시글 작성 페이지 접속---------');
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM board WHERE NUM='${req.session.num}';`, function(err, results){
-      res.render('write', { results: results });
+      res.render('board/write', { results: results });
       
       conn.release();
     });
@@ -66,7 +52,7 @@ router.post('/write2', function(req, res, next) {
 router.get('/delete', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM board;`, function(err, results){
-      res.render('delete');
+      res.render('board/delete');
       conn.release();
     });
   });
@@ -86,29 +72,48 @@ router.get('/delete2', function(req, res, next) {
 });
 
 
+// 게시글 상세보기
+router.get('/post', function(req, res, next) {
+  pool.getConnection(function(err, conn){
+
+    const num = req.query.NUM;
+    const email = req.query.EMAIL;
+
+    pool.getConnection(function(err, conn){
+      conn.query(`SELECT * FROM board WHERE NUM='${num}';`, function(err, results) {
+        res.render('board/post', {results: results[0]});
+        
+        conn.release();
+      });
+    });
+  });
+});
+
+
 //게시판 글 수정 페이지 이동
 router.get('/update', function(req, res, next) {
   pool.getConnection(function(err, conn){
-    
+
+    const num = req.query.NUM;
+    const email = req.query.EMAIL;
+
     // console.log(req.query.EMAIL);
     // console.log(req.session.username);
 
-    if(req.query.EMAIL == req.session.username) {
-      pool.getConnection(function(err, conn){
-        conn.query(`SELECT FROM board WHERE NUM='${req.session.num}';`, function(err, results) {
-          res.render('update',{results: results, id: req.query.id});
-          
-          conn.release();
-        });
+    pool.getConnection(function(err, conn){
+      conn.query(`SELECT * FROM board WHERE NUM='${num}';`, function(err, results) {
+        res.render('board/update', {results: results[0]});
+        
+        conn.release();
       });
-    }
+    });
   });
 });
 
 //게시판 글 수정하기
 router.post('/update', function(req, res, next) {
 
-    const num = req.session.num;
+    const num = req.query.NUM;
     const title = req.body.title;
     const content = req.body.content;
 
@@ -116,7 +121,7 @@ router.post('/update', function(req, res, next) {
       console.log(`UPDATE board SET TITLE='${title}', CONTENT='${content}' WHERE NUM='${num}';`)
       conn.query(`UPDATE board SET TITLE='${title}', CONTENT='${content}' WHERE NUM='${num}';`, function(err, results){
         conn.query('SELECT * FROM board;', function(err, results){
-          res.render('board', {results: results});
+          res.render('board/board', {results: results});
           conn.release();
         });
     });

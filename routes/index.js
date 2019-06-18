@@ -1,18 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const app = express;
-
-const pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'root',
-  password        : 'qazx1235',
-  database        : 'sunny',
-  dateStrings     : 'date'
-});
+const pool = require('../config/dbconfig.js')
 
 // 로그인 페이지
 router.get('/', function(req, res, next) {
@@ -20,9 +11,9 @@ router.get('/', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM user;', function(err, results){
       if (req.session.id && req.session.pw ) {
-        res.render('index', { results : results });
+        res.render('user/index', { results : results });
       } else {
-        res.render('login', {  });
+        res.render('user/login', {  });
       }      
       conn.release();
     });
@@ -44,11 +35,11 @@ router.post('/', function(req, res, next) {
 
         // console.log(req.session.username);
 
-        res.render('logintrue', {ID: id, PW: pw});
+        res.render('user/logintrue', {ID: id, PW: pw});
         console.log('---------로그인 성공---------');
       }
       else {
-        res.render('loginfalse');
+        res.render('user/loginfalse');
         console.log('---------로그인 실패---------');
       }
     });
@@ -63,7 +54,7 @@ router.get('/logout', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM user;', function(err, results){
       if (req.session.id && req.session.pw ) {
-        res.render('logout', { results : results });
+        res.render('user/logout', { results : results });
         req.session.destroy();
       } else {
         res.send('로그인을 먼저 해주세요.');
@@ -82,7 +73,7 @@ router.get('/table', function(req, res, next) {
   
     pool.getConnection(function(err, conn){
     });
-     res.render('index', { results: results });
+     res.render('user/index', { results: results });
 
      conn.release();
     });
@@ -110,7 +101,7 @@ router.get('/join', function(req, res, next) {
   console.log('---------회원가입 페이지 접속---------');
   pool.getConnection(function(err, conn){
     conn.query('SELECT * FROM user;', function(err, results){
-      res.render('join', { results: results });
+      res.render('user/join', { results: results });
       conn.release();
     });
   });
@@ -132,7 +123,7 @@ router.post('/join', function(req, res) {
   pool.getConnection(function(err, conn) {
     conn.query(`INSERT INTO user (\`NAME\`, AGE, BIRTH, \`ADD\`, POST, HOBBY, PHONE, EMAIL, PW) VALUES('${name}', '${age}', '${birth}', '${add}', '${post}', '${hobby}', '${phone}', '${id}', password('${pw}'));`, function(err, result) {
         if (err) { throw err;}
-        res.render('true', {ID: id, PW: pw});
+        res.render('user/jointrue', {ID: id, PW: pw});
     })
   });
 });
