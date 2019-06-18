@@ -38,6 +38,12 @@ router.post('/', function(req, res, next) {
   pool.getConnection(function(err, conn){
     conn.query(`SELECT * FROM user WHERE EMAIL = '${id}' AND PW = password('${pw}');`,function(err, result){
       if (result.length > 0) {
+
+        req.session.username = req.body.id;
+        req.session.pw = req.body.pw;
+
+        // console.log(req.session.username);
+
         res.render('logintrue', {ID: id, PW: pw});
         console.log('---------로그인 성공---------');
       }
@@ -83,6 +89,7 @@ router.get('/table', function(req, res, next) {
   });
 });
 
+
 // 회원 탈퇴
 router.get('/delete', function(req, res, next) {
   
@@ -108,6 +115,7 @@ router.get('/join', function(req, res, next) {
     });
   });
 });
+
 
 // 회원가입 기능
 router.post('/join', function(req, res) {
