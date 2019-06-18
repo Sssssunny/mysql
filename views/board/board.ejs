@@ -50,7 +50,7 @@
     <% for (const result of results) { %>
     <tr>
         <td style="font-weight: bold; font-size: 20px; width: 25px;"><%= result.NUM %></td>
-        <td style="width: 100px;"><a href="/board/post?NUM=<%= result.NUM %>&EMAIL=<%= result.EMAIL %>"><%= result.TITLE %></td>
+        <td style="width: 100px;"><a href="/board/update?NUM=<%= result.NUM %>&EMAIL=<%= result.EMAIL %>"><%= result.TITLE %></td>
         <td><%= result.NAME %></td>
         <td><%= result.WDATE %></td>
     </tr>
@@ -58,7 +58,6 @@
   </table>
 
   <a href="/board/write"><input type="button" class="button" value="글 작성"/></a>
-  <a href="/board/delete"><input type="button" class="button" value="글 삭제"/></a>
   </center>
   </body>
 </html>

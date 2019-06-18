@@ -72,22 +72,22 @@ router.get('/delete2', function(req, res, next) {
 });
 
 
-// 게시글 상세보기
-router.get('/post', function(req, res, next) {
-  pool.getConnection(function(err, conn){
+// // 게시글 상세보기
+// router.get('/post', function(req, res, next) {
+//   pool.getConnection(function(err, conn){
 
-    const num = req.query.NUM;
-    const email = req.query.EMAIL;
+//     const num = req.query.NUM;
+//     const email = req.query.EMAIL;
 
-    pool.getConnection(function(err, conn){
-      conn.query(`SELECT * FROM board WHERE NUM='${num}';`, function(err, results) {
-        res.render('board/post', {results: results[0]});
+//     pool.getConnection(function(err, conn){
+//       conn.query(`SELECT * FROM board WHERE NUM='${num}';`, function(err, results) {
+//         res.render('board/post', {results: results[0]});
         
-        conn.release();
-      });
-    });
-  });
-});
+//         conn.release();
+//       });
+//     });
+//   });
+// });
 
 
 //게시판 글 수정 페이지 이동
@@ -97,8 +97,8 @@ router.get('/update', function(req, res, next) {
     const num = req.query.NUM;
     const email = req.query.EMAIL;
 
-    // console.log(req.query.EMAIL);
-    // console.log(req.session.username);
+    console.log(req.query.EMAIL);
+    console.log(req.session.username);
 
     pool.getConnection(function(err, conn){
       conn.query(`SELECT * FROM board WHERE NUM='${num}';`, function(err, results) {

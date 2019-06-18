@@ -23,19 +23,19 @@
   </style>
   <body>
   <center>
-      <form action="/board/update?NUM=<%= results.NUM %>" method="POST">
-      <br>      
-      <p>
-        <label class="title">수정할 제목</label>
-        <input type="text" name="title" class="w3-input"></p>
-      <br>
-      <p>
-        <label class="title">수정할 본문</label>
-        <textarea name="content" cols="30" rows="10" class="w3-input"></textarea></p>
-      <br>
+    <form action="/board/update?NUM=<%= results.NUM %>" method="POST">
+    <br>    
+    <p>
+      <label class="title">수정할 제목</label>
+      <input type="text" name="title" class="w3-input" value="<%= results.TITLE %>"></p>
+    <br>
+    <p>
+      <label class="title">수정할 본문</label>
+      <textarea name="content" cols="30" rows="10" class="w3-input"><%= results.CONTENT %></textarea></p>
+    <br>
 
-      <input type="submit" value="전송"> <input type="reset" value="초기화">
-      </form>
+    <input type="submit" value="전송"> <input type="reset" value="초기화">
+    </form>
   </center>
   </body>
 </html>
