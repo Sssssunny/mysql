@@ -11,7 +11,6 @@
   }
 
   table {
-      font-family:'Nanum Barun Gothic';
       border-collapse: collapse;
       text-align: center;
       font-size: 15px;
@@ -40,30 +39,21 @@
   <a href="/board/update"><input type="button" value="수정" style="margin-bottom: 10px;"></a>
   
     <table>
-    <th><%= result.TITLE %></th>
+    <th>타이틀</th>
     <tr>
-        <td><%= result.CONTENT %></td>
+        <td>콘텐츠</td>
     </tr>
   </table>
   <br>
   </form>
 
 
-</td>
-<% for (const result of results) { %>
-  <td>
-      <tr>
-          <%= result.email %><br>
-          <%= result.description %><br> 
-      </tr>
-  </td>
-<% } %>
 <td>
   <form action="/board/comment" method="POST">
-      <input type="hidden" name="author" value="<%= author %>">
-      <input type="hidden" name="description" value="<%= description %>">
-      <input type="hidden" name="title" value="<%= title %>">
-      <input type="hidden" name="n_id" value="<%= id %>">
+      <input type="hidden" name="author">
+      <input type="hidden" name="description">
+      <input type="hidden" name="title">
+      <input type="hidden" name="n_id">
       <textarea name="comment" cols="40" rows="5"></textarea>
       <input type="submit">
   </form>

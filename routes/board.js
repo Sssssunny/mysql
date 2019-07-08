@@ -96,9 +96,9 @@ router.get('/post', function(req, res, next) {
 
     const num = req.query.NUM;
 
-    conn.query(`SELECT COUNT(board_ID) AS 'count' FROM comment WHERE board_ID='${num}';`, function(err, counter){
-      conn.query(`SELECT * FROM comment WHERE board_ID='${num}';`, function(err, board_results){
-        conn.query(`SELECT a.*,COUNT(b.com_EMAIL) AS 'count' FROM board AS a LEFT JOIN comment AS b ON a.NUM=b.board_ID WHERE a.NUM='${num}';`, function(err, results){
+    conn.query(`SELECT COUNT(board_ID) AS 'count' FROM comment WHERE board_ID='${num}';`, function(err1, counter){
+      conn.query(`SELECT * FROM comment WHERE board_ID='${num}';`, function(err2, board_results){
+        conn.query(`SELECT a.*,COUNT(b.com_EMAIL) AS 'count' FROM board AS a LEFT JOIN comment AS b ON a.NUM=b.board_ID WHERE a.NUM='${num}';`, function(err3, results){
           
           const email = req.session.username;
           res.render('board/post', {counter: counter, results: results, board_results: board_results, email: email});
